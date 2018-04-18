@@ -11,7 +11,8 @@ namespace myshop.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +22,9 @@ namespace myshop.Models
         }
     
         public int CustomerID { get; set; }
+        [DisplayName("Name")]
         public string CName { get; set; }
+        [DisplayName("Address")]
         public string CAddress { get; set; }
         public string Phone { get; set; }
     
