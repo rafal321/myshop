@@ -48,13 +48,20 @@ namespace myshop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CustomerID,CName,CAddress,Phone")] Customer customer)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Customers.Add(customer);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Customers.Add(customer);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+            catch (DataException)
+            {
 
+                throw;
+            }
             return View(customer);
         }
 
@@ -78,13 +85,21 @@ namespace myshop.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerID,CName,CAddress,Phone")] Customer customer)
+        public ActionResult Edit([Bind(Include = "CName,CAddress,Phone")] Customer customer)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(customer).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(customer).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, see your system administrator.");
+                
             }
             return View(customer);
         }
