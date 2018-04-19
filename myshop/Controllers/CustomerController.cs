@@ -46,7 +46,7 @@ namespace myshop.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerID,CName,CAddress,Phone")] Customer customer)
+        public ActionResult Create([Bind(Include = "CName,CAddress,Phone")] Customer customer)
         {
             try
             {
@@ -59,8 +59,7 @@ namespace myshop.Controllers
             }
             catch (DataException)
             {
-
-                throw;
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
             return View(customer);
         }
